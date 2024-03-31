@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.UsersModel;
 import com.accounting.V2.repository.crud.UsersCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,10 @@ public class UsersRepository {
     
     public List<UsersModel> getAllUsers(){
         return usersCrudRepository.findAll();
+    }
+    
+    public Optional<UsersModel> getByEmail(String mail){
+        return usersCrudRepository.findOneByMail(mail);
     }
     
 }

@@ -5,6 +5,7 @@
 package com.accounting.V2.repository.crud;
 
 import com.accounting.V2.model.UsersModel;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author L E N O V O
  */
 public interface UsersCrudRepository extends JpaRepository<UsersModel, Integer>{
+    
+    Optional<UsersModel> findOneByMail(String mail);
     
 }
