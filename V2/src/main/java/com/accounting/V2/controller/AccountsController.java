@@ -8,8 +8,14 @@ import com.accounting.V2.model.AccountsModel;
 import com.accounting.V2.service.AccountsService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,15 +26,36 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping(value = "api/Accounts")
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class AccountsController {
-    
+
     @Autowired
     private AccountsService accountsService;
-    
+
     @GetMapping(value = "/allAccounts")
-    public List<AccountsModel> getAllAccounts(){
+    public List<AccountsModel> getAllAccounts() {
         return accountsService.getAllAccounts();
     }
-    
+
+    @GetMapping(value = "/getAccounts")
+    public List<AccountsModel> getAllAccountsUser() {
+
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return accountsService.getAccountsByUser(authentication.getName());
+    }
+
+    @GetMapping(value = "/getAccountUser/{accountNumber}")
+    public ResponseEntity getAccountUser(@PathVariable String accountNumber) {
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity(accountsService.getAccountByUser(accountNumber, authentication.getName()), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/deleteBanks/{accountNumber}")
+    public ResponseEntity deleteBanks(@PathVariable String accountNumber) {
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(accountNumber, HttpStatus.valueOf(accountsService.deleteAccount(accountNumber,authentication.getName())));
+    }
 }

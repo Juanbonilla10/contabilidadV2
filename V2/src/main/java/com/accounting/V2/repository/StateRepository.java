@@ -22,6 +22,11 @@ public class StateRepository {
     
     public List<StateModel> getAll(){
         return stateCrudRepository.findAll();
-    } 
+    }
+    
+    public StateModel getStates(String description){
+        return stateCrudRepository.findByDescription(description);
+    }
+    
     
 }

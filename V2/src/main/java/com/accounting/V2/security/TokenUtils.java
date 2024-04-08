@@ -21,11 +21,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class TokenUtils {
     
     private final static String ACCESS_TOKEN_SECRET = "875E25B0488D93602667280F8EDDF6EDCE48D9B5BFF7403191BEB92BA8995DC0";
-    private final static Long ACCESS_TOKEN_VALIDITY_TOKEN = 2_592_000L;
+    private final static Long ACCESS_TOKEN_VALIDITY_TOKEN = 60L;
     
     public static String createToken(String name,String email){
         Long expirationTime = ACCESS_TOKEN_VALIDITY_TOKEN * 1_000;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
+        System.out.println("Acceso hasta : " .concat(expirationDate.toString()));
         
         Map<String,Object> extra =  new HashMap<>();
         extra.put("nombre", name);

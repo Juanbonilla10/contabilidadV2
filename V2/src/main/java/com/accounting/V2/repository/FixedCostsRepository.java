@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.FixedCostsModel;
 import com.accounting.V2.repository.crud.FixedCostsCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,18 @@ public class FixedCostsRepository {
     
     public List<FixedCostsModel> getAllFixedCosts(){
         return fixedCostsCrudRepository.findAll();
+    }
+    
+    public Optional<FixedCostsModel> getFixedCostById(Integer idFixedCost){
+        return fixedCostsCrudRepository.findById(idFixedCost);
+    }
+    
+    public void deleteFixedCostById(Integer idFixedCost ){
+        fixedCostsCrudRepository.deleteById(idFixedCost);
+    }
+    
+    public FixedCostsModel saveFixedCost(FixedCostsModel fixedCostsModel){
+        return fixedCostsCrudRepository.save(fixedCostsModel);
     }
     
 }

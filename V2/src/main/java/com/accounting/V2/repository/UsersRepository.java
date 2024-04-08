@@ -30,4 +30,8 @@ public class UsersRepository {
         return usersCrudRepository.findOneByMail(mail);
     }
     
+    public Optional<UsersModel> getById(Integer idUser){
+        return usersCrudRepository.findById(idUser);
+    }
+    
 }

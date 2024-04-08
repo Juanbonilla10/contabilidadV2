@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface AccountTypesCrudRepository extends JpaRepository<AccounttypesModel, Integer> {
     
+    
 }

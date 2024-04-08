@@ -13,4 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface StateCrudRepository extends JpaRepository<StateModel, Integer>{
     
+    StateModel findByDescription (String description);
+    
 }

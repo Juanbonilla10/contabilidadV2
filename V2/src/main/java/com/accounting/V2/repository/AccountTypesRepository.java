@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.AccounttypesModel;
 import com.accounting.V2.repository.crud.AccountTypesCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,18 @@ public class AccountTypesRepository {
     
     public List<AccounttypesModel> getAllAccounts(){
         return accountTypesCrudRepository.findAll();
+    }
+    
+    public AccounttypesModel saveAccountType(AccounttypesModel accounttypesModel){  
+        return accountTypesCrudRepository.save(accounttypesModel);
+    }
+    
+    public void deleteAccountType(Integer idAccountType){
+         accountTypesCrudRepository.deleteById(idAccountType);
+    }
+    
+    public Optional<AccounttypesModel> getAccountType(Integer IdAccountType){
+        return accountTypesCrudRepository.findById(IdAccountType);
     }
     
     

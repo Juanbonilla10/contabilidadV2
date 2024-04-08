@@ -8,6 +8,8 @@ import com.accounting.V2.model.UsersModel;
 import com.accounting.V2.service.UsersService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,11 @@ public class UsersController {
     
     @GetMapping(value = "/allUsers")
     public List<UsersModel> getAllUsers(){
-        return usersService.getAllUsers();
+        
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();        
+        
+        return usersService.getAllUsers(authentication.getName());
     }
     
 }

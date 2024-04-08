@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.CardsModel;
 import com.accounting.V2.repository.crud.CardsCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +17,28 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class CardsRepository {
-    
+
     @Autowired
     private CardsCrudRepository cardsCrudRepository;
-    
-    public List<CardsModel> getAllCards(){
+
+    public List<CardsModel> getAllCards() {
         return cardsCrudRepository.findAll();
     }
-    
+
+    public Optional<CardsModel> getById(Integer idCards) {
+        return cardsCrudRepository.findById(idCards);
+    }
+
+    public CardsModel getByIdCard(String idCards) {
+        return cardsCrudRepository.findByCardNumber(idCards);
+    }
+
+    public Integer idStringCard(String idCardNumber) {
+        return cardsCrudRepository.findOneByCardNumber(idCardNumber);
+    }
+
+    public List<CardsModel> getCardByUser(Integer idUser) {
+        return cardsCrudRepository.findByUsersId(idUser);
+    }
+
 }

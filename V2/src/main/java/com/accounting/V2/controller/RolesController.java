@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author L E N O V O
  */
-@RequestMapping(value = "api/Roles")
+@RequestMapping(value = "api/Rl")
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class RolesController {
@@ -26,7 +26,7 @@ public class RolesController {
     @Autowired
     private RolesService rolesService;
     
-    @GetMapping(value = "/AllRoles")
+    @GetMapping(value = "/AllRl")
     public List<RolesModel> getAllRoles(){
         return rolesService.getAllRoles();
     }

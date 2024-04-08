@@ -44,5 +44,7 @@ public class CardsModel {
     private Integer franchises_id;
     @Column(name = "banks_id")
     private Integer banks_id;
+    @Column(name = "users_id")
+    private Integer users_id;
     
 }

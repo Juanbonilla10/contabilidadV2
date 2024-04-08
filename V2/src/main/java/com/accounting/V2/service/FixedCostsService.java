@@ -5,8 +5,15 @@
 package com.accounting.V2.service;
 
 import com.accounting.V2.model.FixedCostsModel;
+import com.accounting.V2.model.StateModel;
+import com.accounting.V2.model.UsersModel;
 import com.accounting.V2.repository.FixedCostsRepository;
+import com.accounting.V2.repository.StateRepository;
+import com.accounting.V2.utils.EnumVars;
+import com.accounting.V2.utils.EnumVarsState;
+import com.accounting.V2.utils.Utils;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +23,64 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FixedCostsService {
-    
+
     @Autowired
     private FixedCostsRepository fixedCostsRepository;
-    
-    public List<FixedCostsModel> getAllFixedCosts(){
+
+    @Autowired
+    private StateRepository stateRepository;
+
+    @Autowired
+    private UsersService usersService;
+
+    public List<FixedCostsModel> getAllFixedCosts() {
         return fixedCostsRepository.getAllFixedCosts();
     }
-    
+
+    public FixedCostsModel savesFixedCosts(FixedCostsModel fixedCostsModel) {
+
+        try {
+            if (!fixedCostsModel.getDescription().isEmpty() & !fixedCostsModel.getCost().isBlank()) {
+                Utils dateSystem = new Utils();
+                fixedCostsModel.setDate(dateSystem.getSystemDate());
+                StateModel stateModel = stateRepository.getStates(EnumVars.ACTIVO.getCodigo());
+                fixedCostsModel.setState_id(stateModel.getIdstate());
+                UsersModel userModel = usersService.getUsersById(fixedCostsModel.getUsers_id());
+                fixedCostsModel.setUsers_id(userModel.getIdusers());
+                if (stateModel.getIdstate() != 0 & userModel.getIdusers() != 0) {
+                    return fixedCostsRepository.saveFixedCost(fixedCostsModel);
+                }
+                System.out.println("No se puede crear el gastoFijo porque no se encuentra id para el"
+                        + "usuario " .concat(fixedCostsModel.getUsers_id().toString()) 
+                        + " stado : " .concat(fixedCostsModel.getState_id().toString()));
+                return new FixedCostsModel();
+            } else {
+                return new FixedCostsModel();
+            }
+        } catch (Exception e) {
+            System.out.println("Erro en la creación del gasto fijo: ".concat(e.getMessage()));
+            return new FixedCostsModel();
+        }
+
+    }
+
+    public Integer deleteFixedCosts(FixedCostsModel fixedCostsModel) {
+        try {
+            System.out.println("Ingresando a eliminar fixedCosts");
+            if (fixedCostsModel.getIdfixedCosts() != null) {
+                Optional<FixedCostsModel> fixedCostsById = fixedCostsRepository.getFixedCostById(fixedCostsModel.getIdfixedCosts());
+                if (!fixedCostsById.isEmpty()) {
+                    fixedCostsRepository.deleteFixedCostById(fixedCostsById.get().getIdfixedCosts());
+                    System.out.println("Se borro el fixedCosts");
+                    return EnumVarsState.CREATE_200.getCodigo();
+                }
+                return EnumVarsState.ERROR_500.getCodigo();
+            }
+            return EnumVarsState.ERROR_400.getCodigo();
+        } catch (Exception e) {
+            System.out.println("Erro al borrar banks ".concat(e.getMessage()));
+            return EnumVarsState.ERROR_500.getCodigo();
+        }
+    }
+
 }

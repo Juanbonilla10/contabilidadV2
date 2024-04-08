@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.FranchisesModel;
 import com.accounting.V2.repository.crud.FranchisesCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,18 @@ public class FranchisesRepository {
     
     public List<FranchisesModel> getAll(){
         return franchisesCrudRepository.findAll();
+    }
+    
+    public FranchisesModel createFranchises(FranchisesModel franchisesModel){
+        return franchisesCrudRepository.save(franchisesModel);
+    }
+    
+    public void deleteFranchises(Integer idFranchises){
+        franchisesCrudRepository.deleteById(idFranchises);
+    }
+    
+    public Optional<FranchisesModel> getFranchisesId(Integer idFranchises){
+        return franchisesCrudRepository.findById(idFranchises);
     }
     
 }

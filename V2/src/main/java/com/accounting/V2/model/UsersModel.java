@@ -50,5 +50,7 @@ public class UsersModel {
     private String photo;
     @Column(name = "state_id")
     private Integer state_id;
+    @Column(name = "roles_id")
+    private Integer roles_id;
     
 }

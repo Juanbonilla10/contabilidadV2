@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.RolesModel;
 import com.accounting.V2.repository.crud.RolesCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,10 @@ public class RolesRepository {
     
     public List<RolesModel> getAllRoles(){
         return rolesCrudRepository.findAll();
+    }
+    
+    public Optional<RolesModel> getById(Integer idRole){
+        return rolesCrudRepository.findById(idRole);
     }
     
 }
