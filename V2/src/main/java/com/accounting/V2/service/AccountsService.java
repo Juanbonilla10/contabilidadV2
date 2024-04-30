@@ -29,6 +29,34 @@ public class AccountsService {
     public List<AccountsModel> getAllAccounts() {
         return accountsRepository.getAllAccounts();
     }
+    
+    public AccountsModel saveAccountByUser(AccountsModel accountsModel,String mail){
+        try {
+            System.out.println("Entrando a guardar la cuenta");
+            Optional<UsersModel> user = usersService.getByEmail(mail);
+             if (user.isPresent()) {
+                 System.out.println("El usuario si existe " .concat(mail));
+                 //Validamos que no exista ya la cuenta con el numero de cuenta que se pasa
+                 AccountsModel accountByUser = getAccountByUser(accountsModel.getAccount_number(),mail);
+                 System.out.println("Datos para valdiar si la cuenta existe o no " .concat(accountByUser.toString()));
+                 if(accountByUser.getCard_number() == null){
+                     System.out.println("Se puede crear la cuenta ");
+                     accountsModel.setIdaccounts(0);
+                     accountsModel.setUsers_id(user.get().getIdusers());
+                     return accountsRepository.saveAccountsModel(accountsModel);
+                 }else{
+                     System.out.println("La cuenta ya existe");
+                     return new AccountsModel();
+                 }
+             }else{
+                 System.out.println("El usuario no existe " .concat(mail));
+                 return new AccountsModel();
+             }
+        } catch (Exception e) {
+            System.out.println("Error no se puede crear la cuenta");
+            return new AccountsModel();
+        }
+    }
 
     public List<AccountsModel> getAccountsByUser(String mail) {
         try {
@@ -90,6 +118,21 @@ public class AccountsService {
         } catch (Exception e) {
             System.out.println("Error al borrar la cuenta".concat(e.getMessage()));
             return EnumVarsState.ERROR_500.getCodigo();
+        }
+    }
+    
+    public Optional<AccountsModel> getAccountByAccount(Integer idAccount,String mail){
+        try {
+            System.out.println("Entrando a obtener la cuenta del usuario ".concat(mail));
+            Optional<UsersModel> user = usersService.getByEmail(mail);
+            if(user.isPresent()){
+                return accountsRepository.getByAccountUser(idAccount);
+            }else{
+                return  Optional.empty() ;
+            }
+        } catch (Exception e) {         
+              System.out.println("Errro al obtener la cuenta " .concat(e.getMessage()));
+              return  Optional.empty() ;
         }
     }
 

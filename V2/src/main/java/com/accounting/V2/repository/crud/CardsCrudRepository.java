@@ -23,6 +23,7 @@ public interface CardsCrudRepository extends JpaRepository<CardsModel, Integer>{
     // Consulta personalizada para buscar por el campo "idCardNumber"
     @Query("SELECT c FROM Cards c WHERE c.card_number = :idCardNumber")
     CardsModel findByCardNumber(String idCardNumber);
+   
     
     // Consulta personalizada para buscar por el campo "idUser"
     @Query("SELECT c FROM Cards c WHERE c.users_id = :idUser")

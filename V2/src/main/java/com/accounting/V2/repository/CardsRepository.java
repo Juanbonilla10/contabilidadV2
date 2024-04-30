@@ -40,5 +40,13 @@ public class CardsRepository {
     public List<CardsModel> getCardByUser(Integer idUser) {
         return cardsCrudRepository.findByUsersId(idUser);
     }
+    
+    public CardsModel saveCard(CardsModel cardsModel){
+        return cardsCrudRepository.save(cardsModel);
+    }
+    
+    public void deleteCard(Integer cardNumber){
+         cardsCrudRepository.deleteById(cardNumber);
+    }
 
 }

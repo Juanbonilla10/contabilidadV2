@@ -28,5 +28,9 @@ public class StateRepository {
         return stateCrudRepository.findByDescription(description);
     }
     
+    public StateModel saveState(StateModel stateModel){
+        return stateCrudRepository.save(stateModel);
+    }
+    
     
 }

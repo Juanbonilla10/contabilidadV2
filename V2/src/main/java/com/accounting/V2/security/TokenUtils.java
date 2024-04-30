@@ -21,7 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class TokenUtils {
     
     private final static String ACCESS_TOKEN_SECRET = "875E25B0488D93602667280F8EDDF6EDCE48D9B5BFF7403191BEB92BA8995DC0";
-    private final static Long ACCESS_TOKEN_VALIDITY_TOKEN = 60L;
+    private final static Long ACCESS_TOKEN_VALIDITY_TOKEN = 300L;
     
     public static String createToken(String name,String email){
         Long expirationTime = ACCESS_TOKEN_VALIDITY_TOKEN * 1_000;

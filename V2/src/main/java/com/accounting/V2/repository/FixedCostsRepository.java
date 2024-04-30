@@ -29,6 +29,10 @@ public class FixedCostsRepository {
         return fixedCostsCrudRepository.findById(idFixedCost);
     }
     
+    public List<FixedCostsModel> getFixedCostByEmaill(String idUser){
+        return fixedCostsCrudRepository.findByUserIdFixedCost(idUser);
+    }
+    
     public void deleteFixedCostById(Integer idFixedCost ){
         fixedCostsCrudRepository.deleteById(idFixedCost);
     }

@@ -33,6 +33,12 @@ public class AccountTypesService {
     public List<AccounttypesModel> getAllAccountTypes() {
         return accountTypesRepository.getAllAccounts();
     }
+    
+    public Optional<AccounttypesModel> getAccountType(Integer idAccountType){
+        System.out.println("Datos desde la entrada " .concat(idAccountType.toString()));
+        System.out.println("Datos de respuesta unicoooooooooooo " .concat(accountTypesRepository.getAccountType(idAccountType).toString()));
+        return accountTypesRepository.getAccountType(idAccountType);
+    }
 
     public AccounttypesModel saveAccountType(AccounttypesModel accounttypesModel) {
 

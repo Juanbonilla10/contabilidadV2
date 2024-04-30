@@ -31,6 +31,10 @@ public class AccountsRepository {
         return accountsCrudRepository.findAll();
     }
     
+    public Optional<AccountsModel> getByAccountUser(Integer idAccount){
+        return accountsCrudRepository.findById(idAccount);
+    }
+    
     public List<AccountsModel> getAllAccountsByUser(Integer userId){
         return accountsCrudRepository.findAccountsUser(userId);
     }
@@ -43,4 +47,8 @@ public class AccountsRepository {
          accountsCrudRepository.deleteById(idAccount);
     }
     
+    
+    public AccountsModel saveAccountsModel(AccountsModel accountsModel){
+        return accountsCrudRepository.save(accountsModel);
+    }
 }

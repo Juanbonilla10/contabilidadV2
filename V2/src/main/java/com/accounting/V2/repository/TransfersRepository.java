@@ -7,6 +7,7 @@ package com.accounting.V2.repository;
 import com.accounting.V2.model.TransfersModel;
 import com.accounting.V2.repository.crud.TransfersCrudRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,18 @@ public class TransfersRepository {
     
     public List<TransfersModel> getAllTransfer(){
         return transfersCrudRepository.findAll();
+    }
+    
+    public TransfersModel saveTransfer(TransfersModel transfersModel){
+        return transfersCrudRepository.save(transfersModel);
+    }
+    
+    public void deleteTransfer(Integer idTransfer){
+        transfersCrudRepository.deleteById(idTransfer);
+    }
+    
+    public Optional<TransfersModel> getIdTransfer(Integer idTransfer){
+        return transfersCrudRepository.findById(idTransfer);
     }
     
 }

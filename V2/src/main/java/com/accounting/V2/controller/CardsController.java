@@ -8,11 +8,16 @@ import com.accounting.V2.model.CardsModel;
 import com.accounting.V2.service.CardsService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +55,24 @@ public class CardsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return cardsService.getByIdCardsModel( authentication.getName());
+    }
+    
+    @PostMapping(value = "/saveCard")
+    public ResponseEntity saveCard(@RequestBody CardsModel cardsModel){
+        
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        return  new ResponseEntity(cardsService.saveCard(cardsModel, authentication.getName()), HttpStatus.CREATED);
+    }
+    
+    @DeleteMapping(value = "/deleteCard/{card}")
+    public ResponseEntity deleteCard(@PathVariable String card){
+         // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();   
+        cardsService.deleteCard(card, authentication.getName());
+         return  new ResponseEntity(HttpStatus.OK);
+    
     }
 
 }

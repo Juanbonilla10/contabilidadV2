@@ -36,6 +36,25 @@ public class FixedCostsService {
     public List<FixedCostsModel> getAllFixedCosts() {
         return fixedCostsRepository.getAllFixedCosts();
     }
+    
+    public List<FixedCostsModel> getFixedCostsById(String mail){
+        try {
+             System.out.println("Entrando a obtener los gastos fijos de " .concat(mail));
+              Optional<UsersModel> um = usersService.getByEmail(mail);
+            if (um.isPresent()){
+                System.out.println("Validando consulta de datos para los gastos fijos");
+                return fixedCostsRepository.getFixedCostByEmaill(um.get().getIdusers().toString());
+            }else{
+                System.out.println("Error el uuario no es valido para consultar");
+                return (List<FixedCostsModel>) new FixedCostsModel();
+            }
+             
+        } catch (Exception e) {
+            System.out.println("Error al obtener los gastos fijos del usuario " .concat(mail));
+            System.out.println("Error : " .concat(e.getMessage()));
+            return (List<FixedCostsModel>) new FixedCostsModel();
+        }
+    }
 
     public FixedCostsModel savesFixedCosts(FixedCostsModel fixedCostsModel) {
 

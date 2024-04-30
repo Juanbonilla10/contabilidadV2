@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,10 +54,17 @@ public class AccountsController {
         return new ResponseEntity(accountsService.getAccountByUser(accountNumber, authentication.getName()), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteBanks/{accountNumber}")
-    public ResponseEntity deleteBanks(@PathVariable String accountNumber) {
+    @DeleteMapping(value = "/deleteAccount/{accountNumber}")
+    public ResponseEntity deleteAccount(@PathVariable String accountNumber) {
         // Obtenemos la autenticación del contexto de seguridad
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(accountNumber, HttpStatus.valueOf(accountsService.deleteAccount(accountNumber,authentication.getName())));
+    }
+    
+    @PostMapping(value = "/saveAccount")
+    public ResponseEntity saveAccount(@RequestBody AccountsModel accountsModel){
+        // Obtenemos la autenticación del contexto de seguridad
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity(accountsService.saveAccountByUser(accountsModel, authentication.getName()) , HttpStatus.CREATED);
     }
 }
